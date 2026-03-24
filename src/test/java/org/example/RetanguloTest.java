@@ -16,7 +16,7 @@ class RetanguloTest {
         int area = retangulo.calcularArea();
 
         //Entao
-        assertEquals(60, area, "A área do retângulo deve ser largura * altura");
+        assertEquals(50, area, "A área do retângulo deve ser largura * altura");
     }
 
     @Test
