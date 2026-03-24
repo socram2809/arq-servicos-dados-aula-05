@@ -1,0 +1,42 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ] # Dispara o CI a cada push na branch principal
+  pull_request:
+    branches: [ "main" ] # Garante que o código seja testado antes do merge
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest # Ambiente de execução (Linux)
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21' # Versao do Java da app
+        distribution: 'temurin'
+        cache: maven # Otimiza o tempo de build
+        
+    - name: Build and Tests with Maven
+      # Executa o ciclo de build e testes automatizados
+      run: mvn -B verify --file pom.xml
+
+    - name: Gerar Artefato
+      # No CD, o código é convertido em artefatos como JAR
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-aula-05
+        target: target/*.jar
